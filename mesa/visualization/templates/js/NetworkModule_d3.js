@@ -1,8 +1,8 @@
-var NetworkModule = function(svg_width, svg_height) {
+var NetworkModule = function(svg_width, svg_height, image="") {
 
     // Create the svg tag:
     var svg_tag = "<svg width='" + svg_width + "' height='" + svg_height + "' " +
-        "style='border:1px dotted'></svg>";
+        "style='border:1px dotted; background-image: url('" + image +"')'></svg>";
 
     // Append svg to #elements:
     $("#elements")
