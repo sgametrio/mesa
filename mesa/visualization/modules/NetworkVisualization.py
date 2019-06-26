@@ -24,7 +24,7 @@ class NetworkModule(VisualizationElement):
         self.canvas_height = canvas_height
         self.canvas_width = canvas_width
         self.canvas_background = canvas_background
-        new_element = ("new NetworkModule({}, {}, {})".
+        new_element = ("new NetworkModule({}, {}, '{}')".
                        format(self.canvas_width, self.canvas_height, self.canvas_background))
         self.js_code = "elements.push(" + new_element + ");"
 
