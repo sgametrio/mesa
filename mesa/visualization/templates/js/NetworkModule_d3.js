@@ -17,10 +17,10 @@ var NetworkModule = function(svg_width, svg_height, image="") {
         .attr("class", "tooltip")
         .style("opacity", 0);
 
-    svg.call(d3.zoom()
-        .on("zoom", function() {
-            g.attr("transform", d3.event.transform);
-        }));
+    // svg.call(d3.zoom()
+    //     .on("zoom", function() {
+    //         g.attr("transform", d3.event.transform);
+    //     }));
 
     this.render = function(data) {
         var graph = JSON.parse(JSON.stringify(data));
