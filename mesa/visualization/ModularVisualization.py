@@ -237,10 +237,8 @@ class ModularServer(tornado.web.Application):
     socket_handler = (r'/ws', SocketHandler)
     static_handler = (r'/static/(.*)', tornado.web.StaticFileHandler,
                       {"path": os.path.dirname(__file__) + "/templates"})
-    local_handler = (r'/local/(.*)', tornado.web.StaticFileHandler,
-                     {"path": ''})
 
-    handlers = [page_handler, socket_handler, static_handler, local_handler]
+    handlers = [page_handler, socket_handler, static_handler]
 
     settings = {"debug": True,
                 "autoreload": False,
@@ -248,7 +246,7 @@ class ModularServer(tornado.web.Application):
 
     EXCLUDE_LIST = ('width', 'height',)
 
-    def __init__(self, model_cls, visualization_elements, name="Mesa Model",
+    def __init__(self, model_cls, visualization_elements, name="Mesa Model", assets_path="",
                  model_params={}):
         """ Create a new visualization server with the given elements. """
         # Prep visualization elements:
@@ -262,6 +260,11 @@ class ModularServer(tornado.web.Application):
             for include_file in element.local_includes:
                 self.local_includes.add(include_file)
             self.js_code.append(element.js_code)
+
+        # set dynamic assets serving
+        local_handler = (r'/assets/(.*)', tornado.web.StaticFileHandler,
+                     {"path": assets_path})
+        self.handlers.append(local_handler)
 
         # Initializing the model
         self.model_name = name
