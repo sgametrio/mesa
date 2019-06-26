@@ -21,6 +21,9 @@ var NetworkModule = function(svg_width, svg_height, image="") {
     //     .on("zoom", function() {
     //         g.attr("transform", d3.event.transform);
     //     }));
+    
+    // Disable zoom
+    svg.on(".zoom", null)
 
     this.render = function(data) {
         var graph = JSON.parse(JSON.stringify(data));
@@ -101,9 +104,9 @@ var NetworkModule = function(svg_width, svg_height, image="") {
         g = svg.append("g")
             .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-        svg.call(d3.zoom()
-            .on("zoom", function() {
-                g.attr("transform", d3.event.transform);
-            }));
+        // svg.call(d3.zoom()
+        //     .on("zoom", function() {
+        //         g.attr("transform", d3.event.transform);
+        //     }));
     }
 };
