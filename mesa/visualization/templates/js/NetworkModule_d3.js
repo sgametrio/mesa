@@ -8,7 +8,6 @@ var NetworkModule = function(svg_width, svg_height, image="") {
         .append($(svg_tag)[0]);
 
     var svg = d3.select("svg")
-    svg.selectAll("g").remove()
     let g = svg.append("g")
 
     var tooltip = d3.select("body").append("div")
@@ -19,6 +18,8 @@ var NetworkModule = function(svg_width, svg_height, image="") {
     svg.on(".zoom", null)
 
     this.render = function(data) {
+
+        svg.selectAll("g").remove()
         var graph = JSON.parse(JSON.stringify(data));
         
         let simulation = d3.forceSimulation(graph.nodes)
