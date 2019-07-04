@@ -7,8 +7,9 @@ var NetworkModule = function(svg_width, svg_height, image="") {
     $("#elements")
         .append($(svg_tag)[0]);
 
-    var svg = d3.select("svg"),
-        g = svg.append("g")
+    var svg = d3.select("svg")
+    svg.selectAll("*").remove()
+    let g = svg.append("g")
 
     var tooltip = d3.select("body").append("div")
         .attr("class", "tooltip")
@@ -19,14 +20,6 @@ var NetworkModule = function(svg_width, svg_height, image="") {
 
     this.render = function(data) {
         var graph = JSON.parse(JSON.stringify(data));
-
-        // var simulation = d3.forceSimulation(graph.nodes)
-        //     .force("charge", d3.forceManyBody()
-        //         .strength(-80)
-        //         .distanceMin(6))
-        //     .force("link", d3.forceLink(graph.edges))
-        //     .force("center", d3.forceCenter())
-        //     .stop();
         
         let simulation = d3.forceSimulation(graph.nodes)
                             .force("link", d3.forceLink(graph.edges))
