@@ -18,8 +18,8 @@ var NetworkModule = function(svg_width, svg_height, image="") {
     svg.on(".zoom", null)
 
     this.render = function(data) {
-
-        svg.selectAll("g").remove()
+        // Remove older `g` representations
+        g.selectAll("g").remove()
         var graph = JSON.parse(JSON.stringify(data));
         
         let simulation = d3.forceSimulation(graph.nodes)
