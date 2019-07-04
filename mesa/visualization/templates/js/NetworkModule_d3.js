@@ -8,7 +8,7 @@ var NetworkModule = function(svg_width, svg_height, image="") {
         .append($(svg_tag)[0]);
 
     var svg = d3.select("svg")
-    svg.selectAll("*").remove()
+    svg.selectAll("g").remove()
     let g = svg.append("g")
 
     var tooltip = d3.select("body").append("div")
