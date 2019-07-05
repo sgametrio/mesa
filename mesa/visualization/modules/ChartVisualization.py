@@ -84,6 +84,7 @@ class ChartModule(VisualizationElement):
         
         elif self.scope == "agent":
             df = data_collector.get_agent_vars_dataframe().astype('float')
+            print(df.to_string())
             latest_step = df.index.levels[0][-1]
             labelStrings = [s['Label'] for s in self.series]
             dictionary = df.loc[latest_step].T.loc[labelStrings].to_dict()
