@@ -68,10 +68,16 @@ class BarChartModule(VisualizationElement):
 
         if self.scope == "agent":
             df = data_collector.get_agent_vars_dataframe().astype('float')
-            latest_step = df.index.levels[0][-1]
-            labelStrings = [f['Label'] for f in self.fields]
-            dict = df.loc[latest_step].T.loc[labelStrings].to_dict()
+            try:
+                latest_step = df.index.levels[0][-1]
+                labelStrings = [f['Label'] for f in self.fields]
+                dict = df.loc[latest_step].T.loc[labelStrings].to_dict()
+                
+            except (IndexError, KeyError):
+                labelStrings = [f['Label'] for f in self.fields]
+                dict = labelStrings.to_dict()
             current_values = list(dict.values())
+
 
         elif self.scope == "model":
             outDict = {}
