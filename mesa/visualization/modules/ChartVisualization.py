@@ -44,7 +44,7 @@ class ChartModule(VisualizationElement):
     """
     package_includes = ["Chart.min.js", "ChartModule.js"]
 
-    def __init__(self, series, canvas_height=200, canvas_width=500,
+    def __init__(self, series, scope="model", canvas_height=200, canvas_width=500,
                  data_collector_name="datacollector"):
         """
         Create a new line chart visualization.
@@ -57,6 +57,7 @@ class ChartModule(VisualizationElement):
             data_collector_name: Name of the DataCollector to use.
         """
 
+        self.scope = scope
         self.series = series
         self.canvas_height = canvas_height
         self.canvas_width = canvas_width
@@ -72,11 +73,21 @@ class ChartModule(VisualizationElement):
         current_values = []
         data_collector = getattr(model, self.data_collector_name)
 
-        for s in self.series:
-            name = s["Label"]
-            try:
-                val = data_collector.model_vars[name][-1]  # Latest value
-            except (IndexError, KeyError):
-                val = 0
-            current_values.append(val)
+        if self.scope == "model":
+            for s in self.series:
+                name = s["Label"]
+                try:
+                    val = data_collector.model_vars[name][-1]  # Latest value
+                except (IndexError, KeyError):
+                    val = 0
+                current_values.append(val)
+        
+        elif self.scope == "agent":
+            df = data_collector.get_agent_vars_dataframe().astype('float')
+            latest_step = df.index.levels[0][-1]
+            labelStrings = [s['Label'] for s in self.series]
+            dictionary = df.loc[latest_step].T.loc[labelStrings].to_dict()
+            current_values = list(dictionary.values())
+        else:
+            raise ValueError("scope must be 'agent' or 'model'")
         return current_values
