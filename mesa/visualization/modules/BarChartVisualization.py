@@ -75,8 +75,10 @@ class BarChartModule(VisualizationElement):
                 
             except (IndexError, KeyError):
                 labelStrings = [f['Label'] for f in self.fields]
-                dict = labelStrings.to_dict()
-            current_values = list(dict.values())
+                dict = {}
+                for string in labelStrings:
+                    dict[string] = 0
+                current_values = list(dict.values())
 
 
         elif self.scope == "model":
