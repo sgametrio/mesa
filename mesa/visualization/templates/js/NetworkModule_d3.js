@@ -58,6 +58,8 @@ var NetworkModule = function(svg_width, svg_height, image="") {
                 .attr("cy", function(d) { return d.yy; })
                 .attr("r", function(d) { return d.size; })
                 .attr("fill", function(d) { return d.color; })
+                .attr("stroke", function (d) {return d.border })
+                .attr("stroke-width", function (d) { return d.border == "transparent" ? 0 : "2px" })
                 .on("mouseover", function(d) {
                     tooltip.transition()
                         .duration(200)
